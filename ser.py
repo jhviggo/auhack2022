@@ -24,8 +24,8 @@ def loopSerial():
         print("line recieved: " + line_received);
       if len(sendData) != 0:
         for i in sendData:
-          conn.write(sendData[-1].encode())
-          print("line sent: " + sendData[-1])
+          conn.write(i.encode())
+          print("line sent: " + i)
         sendData = []
   except Exception as e:
     print(e)
