@@ -1,7 +1,8 @@
 import serial
 import time
+
 conn = None
-sendData = None
+sendData = []
 
 def connect():
   print("connecting...\t\t\t", end="")
@@ -19,17 +20,19 @@ def loopSerial():
   try:
     while True:
       line_received = conn.readline().decode().strip()
-      print("line recieved: " + line_received);
-      if sendData != None:
-        conn.write(sendData.encode())
-        print("line sent: " + sendData)
-        sendData = None
+      if line_received:
+        print("line recieved: " + line_received);
+      if len(sendData) != 0:
+        for i in sendData:
+          conn.write(sendData[-1].encode())
+          print("line sent: " + sendData[-1])
+        sendData = []
   except Exception as e:
     print(e)
 
 def writeline(line):
   global sendData
-  sendData = line
+  sendData.append(line)
 
 if conn:
   conn.close()
