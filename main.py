@@ -2,11 +2,12 @@ import repository
 import ser
 
 print("Application starting...")
+ser.connect()
+
 db = repository.connect()
 repository.listen(db)
 
-conn = ser.connect()
-ser.readline(conn)
+ser.loopSerial()
 
 # Main loop
 while True:

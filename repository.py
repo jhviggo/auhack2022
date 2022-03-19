@@ -3,8 +3,8 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 import threading
 
-# Firestore database object
-db = None
+import ser
+
 # Create an Event for notifying main thread.
 callback_done = threading.Event()
 
@@ -21,6 +21,7 @@ def connect():
 def on_snapshot(doc_snapshot, changes, read_time):
   for doc in doc_snapshot:
       print(f'Received document snapshot: {doc.id} => {doc.to_dict()}')
+      ser.writeline(str(doc.to_dict()["state"]) + str(doc.to_dict()["id"]));
   callback_done.set()
 
 def listen(db):
